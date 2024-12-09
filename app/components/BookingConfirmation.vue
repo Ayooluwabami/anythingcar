@@ -1,5 +1,4 @@
-{
-  <template>
+<template>
     <Page>
       <ActionBar title="Booking Confirmed">
         <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="goToHome" />
@@ -36,7 +35,9 @@
   </template>
 
   <script lang="ts">
-  export default {
+  import { defineComponent } from 'vue';
+
+  export default defineComponent({
     props: {
       booking: {
         type: Object,
@@ -61,14 +62,14 @@
           clearHistory: true
         });
       }
-    }
+  });
   };
   </script>
 
   <style scoped>
   .success-icon {
-    horizontalAlignment: center;
-    margin: 20 0;
+      text-align: center;
+      margin: 20 0;
   }
   .success-title {
     font-size: 24;
@@ -118,4 +119,4 @@
     margin: 10 0;
   }
   </style>
-}
+</style>

@@ -18,6 +18,9 @@
   import { ImagePicker } from '@nativescript/imagepicker';
 
   export default {
+    methods: {
+      onRemoveImage(index: number): void;
+    };
     data() {
       return {
         images: [] as string[]
@@ -50,7 +53,7 @@
   .image-container {
     background-color: #ffffff;
     border-radius: 8;
-    elevation: 2;
+    direction: 2;
     margin: 4;
   }
   </style>

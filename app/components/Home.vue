@@ -1,5 +1,4 @@
-{
-  <template>
+<template>
     <Page>
       <ActionBar title="Anything Cars" />
       <ScrollView>
@@ -19,7 +18,7 @@
             <Label col="1" text="View All" class="text-right text-primary" @tap="onViewAll" />
           </GridLayout>
 
-          <ListView for="car in cars" height="300">
+          <ListView v-for="car in cars" height="300">
             <v-template>
               <StackLayout padding="10">
                 <Image :src="car.image" stretch="aspectFill" height="150" />
@@ -34,7 +33,9 @@
   </template>
 
   <script lang="ts">
-  export default {
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
     data() {
       return {
         cars: [
@@ -65,7 +66,7 @@
         this.$navigateTo(require('./VehicleList').default);
       }
     }
-  };
+  });
   </script>
 
   <style scoped>
@@ -98,4 +99,4 @@
     text-align: right;
   }
   </style>
-}
+</style>

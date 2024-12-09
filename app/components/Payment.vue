@@ -60,7 +60,7 @@
         required: true
       }
     },
-    data() {
+    data(): { selectedPayment: string; cardNumber: string; expiryDate: string; cvv: string; processing: boolean } {
       return {
         selectedPayment: '',
         cardNumber: '',
@@ -83,6 +83,9 @@
     methods: {
       selectPayment(method) {
         this.selectedPayment = method;
+      },
+      $navigateBack() {
+        this.$router.go(-1);
       },
       async processPayment() {
         if (!this.canPay || this.processing) return;

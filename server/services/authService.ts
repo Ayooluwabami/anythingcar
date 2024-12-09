@@ -106,4 +106,53 @@ export const authService = {
   verifyOTP: async (userId: string, otp: string) => {
     return notificationService.verifyOTP(userId, otp);
   },
+
+  forgotPassword: async (email: string) => {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      throw new Error('User with this email does not exist');
+    }
+    const resetToken = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' }
+    );
+
+    user.passwordResetToken = resetToken;
+    await user.save();
+
+    // Send the reset token to the user's email
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+    const emailSubject = "Password Reset Request";
+    const emailBody = `You requested a password reset. Click the link below to reset your password: \n\n${resetUrl}`;
+
+    await sendEmail(user.email, emailSubject, emailBody);
+
+    return { message: 'Password reset instructions have been sent to your email' };
+  },
+
+  resetPassword: async (token: string, newPassword: string) => {
+    try {
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { _id: string };
+
+      const user = await User.findById(decoded._id);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Validate the new password 
+      if (!newPassword || newPassword.length < 6) {
+        throw new Error('Password is too weak');
+      }
+
+      user.password = newPassword;
+      user.passwordResetToken = null; // Clear the reset token
+      await user.save();
+
+      return { message: 'Password has been successfully updated' };
+    } catch (error) {
+      throw new Error('Invalid or expired token');
+    }
+  },
 };

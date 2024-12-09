@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -40,8 +40,6 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   googleId: String,
-  microsoftId: String,
-  facebookId: String,
   businessInfo: {
     companyName: String,
     address: String,
@@ -57,9 +55,63 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+export interface IUser extends Document {
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+  },
+  accountType: {
+    type: String,
+    enum: ['Business Owner', 'Customer'],
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'car owner', 'car dealer', 'parts dealer'],
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  googleId: String,
+  businessInfo: {
+    companyName: String,
+    address: String,
+    registrationNumber: String,
+    businessType: {
+      type: String,
+      enum: ['Car Dealership', 'Auto Parts Store', 'Both'],
+    },
+  },
+  createdAt: {
+    type: Date,
+    default: Date,
+  },
+};
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);

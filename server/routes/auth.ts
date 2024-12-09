@@ -22,24 +22,6 @@ router.get('/google/callback',
   authController.oauthCallback
 );
 
-router.get('/microsoft',
-  passport.authenticate('microsoft', { scope: ['user.read'] })
-);
-
-router.get('/microsoft/callback',
-  passport.authenticate('microsoft', { failureRedirect: '/login' }),
-  authController.oauthCallback
-);
-
-router.get('/facebook',
-  passport.authenticate('facebook', { scope: ['email'] })
-);
-
-router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  authController.oauthCallback
-);
-
 // Profile completion for OAuth users
 router.post('/complete-profile', authController.completeProfile);
 

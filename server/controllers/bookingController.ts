@@ -8,7 +8,10 @@ export const bookingController = {
   async createBooking(req: Request, res: Response) {
     try {
       const { vehicleId, startDate, endDate, pickupLocation, dropoffLocation } = req.body;
-      const userId = req.user._id;
+      if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+      }
+      const userId = (req.user as any)._id;
 
       const vehicle = await Vehicle.findById(vehicleId);
       if (!vehicle) {
@@ -44,7 +47,7 @@ export const bookingController = {
 
       // Send notifications
       const customer = await User.findById(userId);
-      await notificationService.sendBookingConfirmation(customer, booking);
+      await notificationService.sendNotification(customer, 'Booking Confirmation', `Your booking with ID ${booking._id} has been confirmed.`);
 
       res.status(201).json(booking);
     } catch (error) {
@@ -54,7 +57,10 @@ export const bookingController = {
 
   async getUserBookings(req: Request, res: Response) {
     try {
-      const bookings = await Booking.find({ customer: req.user._id })
+      if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+      }
+      const bookings = await Booking.find({ customer: (req.user as any)._id })
         .populate('vehicle')
         .sort({ createdAt: -1 });
 
@@ -68,7 +74,7 @@ export const bookingController = {
     try {
       const booking = await Booking.findOne({
         _id: req.params.id,
-        customer: req.user._id,
+        customer: req.user ? (req.user as any)._id : undefined,
       }).populate('vehicle');
 
       if (!booking) {
@@ -85,7 +91,7 @@ export const bookingController = {
     try {
       const booking = await Booking.findOne({
         _id: req.params.id,
-        customer: req.user._id,
+        customer: req.user ? (req.user as any)._id : undefined,
       });
 
       if (!booking) {
@@ -107,8 +113,8 @@ export const bookingController = {
       await Vehicle.findByIdAndUpdate(booking.vehicle, { isAvailable: true });
 
       // Send cancellation notifications
-      const customer = await User.findById(req.user._id);
-      await notificationService.sendBookingCancellation(customer, booking);
+      const customer = await User.findById((req.user as any)._id);
+      await notificationService.sendNotification(customer, 'Booking Cancellation', `Your booking with ID ${booking._id} has been cancelled.`);
 
       res.json(booking);
     } catch (error) {
@@ -120,7 +126,7 @@ export const bookingController = {
     try {
       const booking = await Booking.findOne({
         _id: req.params.id,
-        customer: req.user._id,
+        customer: req.user ? (req.user as any)._id : undefined,
       });
 
       if (!booking) {
@@ -148,7 +154,7 @@ export const bookingController = {
       const { rating, review } = req.body;
       const booking = await Booking.findOne({
         _id: req.params.id,
-        customer: req.user._id,
+        customer: req.user ? (req.user as any)._id : undefined,
       });
 
       if (!booking) {
