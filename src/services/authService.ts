@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
-import { sendEmail } from '../utils/email';
-import { notificationService } from './notificationService';
+import { notificationService } from '../../server/services/notificationService';
 
 export const authService = {
   register: async (userData: any) => {
@@ -118,7 +117,12 @@ export const authService = {
       throw new Error('User not found');
     }
 
-    user.kycDocuments = documents;
+    user.kycDocuments = User.schema.path('kycDocuments').cast(documents.map(doc => ({
+      type: doc.type,
+      verified: doc.verified || false,
+      url: doc.url || '',
+      verifiedAt: doc.verifiedAt || null,
+    })));
     user.kycStatus = 'pending';
     await user.save();
 

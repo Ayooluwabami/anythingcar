@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { User, Phone, Mail, Shield, Key } from 'lucide-react';
+import { User as LucideUser, Phone, Key } from 'lucide-react';
 import axios from 'axios';
 
 export function Profile() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: user?.username || '',
@@ -38,7 +38,7 @@ export function Profile() {
         <div className="bg-blue-600 p-6 text-white">
           <div className="flex items-center space-x-4">
             <div className="bg-white rounded-full p-3">
-              <User className="h-8 w-8 text-blue-600" />
+              <LucideUser className="h-8 w-8 text-blue-600" />
             </div>
             <div>
               <h1 className="text-2xl font-bold">{user?.username}</h1>
@@ -64,10 +64,10 @@ export function Profile() {
             {/* Profile Information */}
             <div className="space-y-4">
               <h2 className="text-lg font-semibold flex items-center">
-                <User className="h-5 w-5 mr-2" />
+                <LucideUser className="h-5 w-5 mr-2" />
                 Profile Information
               </h2>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Username

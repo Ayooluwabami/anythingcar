@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Car, Menu, User, X, Phone, ShoppingCart, MessageSquare } from 'lucide-react';
+import { Car, Menu, User, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
@@ -35,7 +35,7 @@ export function Navbar() {
             <Link to="/contact" className="text-gray-600 hover:text-blue-600">
               Contact Us
             </Link>
-            
+
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link to="/dashboard">
@@ -104,7 +104,7 @@ export function Navbar() {
             >
               Contact Us
             </Link>
-            
+
             {user ? (
               <>
                 <Link

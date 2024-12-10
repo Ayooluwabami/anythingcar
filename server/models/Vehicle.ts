@@ -10,6 +10,10 @@ const vehicleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  _id: {
+    type: String,
+    required: true,
+  },
   model: {
     type: String,
     required: true,
@@ -23,10 +27,6 @@ const vehicleSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
-  isAvailable: {
-    type: Boolean,
-    default: true,
   },
   location: {
     type: {
@@ -47,6 +47,10 @@ const vehicleSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  isAvailable: {
+    type: Boolean,
+    default: true,
+  },
   images: [{
     type: String,
     required: true,
@@ -60,6 +64,7 @@ const vehicleSchema = new mongoose.Schema({
     name: String,
     licenseNumber: String,
     phoneNumber: String,
+    driverId: String,
   },
 });
 

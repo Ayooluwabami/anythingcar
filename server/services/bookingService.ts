@@ -19,7 +19,7 @@ export const bookingService = {
     const startDate = new Date(bookingData.startDate);
     const endDate = new Date(bookingData.endDate);
     const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     const baseAmount = days * vehicle.pricePerDay;
     const securityEscortAmount = bookingData.securityEscort ? days * 30000 : 0;
     const totalAmount = baseAmount + securityEscortAmount;
@@ -28,7 +28,7 @@ export const bookingService = {
     const booking = new Booking({
       customer: userId,
       vehicle: vehicle._id,
-      driver: vehicle.driver,
+      driver: vehicle.driverDetails?.driverId,
       startDate,
       endDate,
       pickupLocation: bookingData.pickupLocation,
@@ -57,7 +57,7 @@ export const bookingService = {
 
     // Send notifications
     const customer = await User.findById(userId);
-    const driver = await User.findById(vehicle.driver);
+    const driver = await User.findById(vehicle.driverDetails?.driverId);
 
     if (customer) {
       await notificationService.sendNotification(

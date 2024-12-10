@@ -61,7 +61,7 @@ export function About() {
           <ol className="list-decimal pl-6 space-y-4">
             <li>
               <strong>Create an Account:</strong> Sign up using your email or phone
-              number, or connect with Google, Microsoft, or Facebook.
+              number, or connect with Google.
             </li>
             <li>
               <strong>Choose Your Service:</strong> Select from car hire, marketplace

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import { Download, Printer } from 'lucide-react';
+import { Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 interface PaymentReceiptProps {
   payment: {
@@ -89,11 +89,10 @@ export function PaymentReceipt({ payment, onClose }: PaymentReceiptProps) {
           <div className="text-center">
             <p className="text-gray-600">Amount Paid</p>
             <p className="text-3xl font-bold">₦{formatCurrency(payment.amount)}</p>
-            <span className={`inline-block px-3 py-1 rounded-full text-sm ${
-              payment.status === 'success' 
+            <span className={`inline-block px-3 py-1 rounded-full text-sm ${payment.status === 'success'
                 ? 'bg-green-100 text-green-800'
                 : 'bg-red-100 text-red-800'
-            }`}>
+              }`}>
               {payment.status}
             </span>
           </div>

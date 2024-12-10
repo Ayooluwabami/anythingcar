@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Car, Package, DollarSign, Users, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Car, Package, DollarSign, Users } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import axios from 'axios';
 
@@ -39,7 +38,7 @@ export function BusinessOwnerDashboard() {
   const renderDashboardByRole = () => {
     switch (user?.role) {
       case 'car owner':
-        return <CarOwnerSection stats={stats} />;
+        return <CarOwnerSection />;
       case 'car dealer':
         return <CarDealerSection stats={stats} />;
       case 'parts dealer':
@@ -116,7 +115,7 @@ function StatCard({ icon, title, value, trend }: {
   );
 }
 
-function CarOwnerSection({ stats }: { stats: BusinessStats }) {
+function CarOwnerSection() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-lg shadow-md">
@@ -131,7 +130,7 @@ function CarOwnerSection({ stats }: { stats: BusinessStats }) {
   );
 }
 
-function CarDealerSection({ stats }: { stats: BusinessStats }) {
+function CarDealerSection({ }: { stats: BusinessStats }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-lg shadow-md">
@@ -146,7 +145,7 @@ function CarDealerSection({ stats }: { stats: BusinessStats }) {
   );
 }
 
-function PartsDealerSection({ stats }: { stats: BusinessStats }) {
+function PartsDealerSection({ }: { stats: BusinessStats }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-lg shadow-md">

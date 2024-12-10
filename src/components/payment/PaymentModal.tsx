@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { CardElement, Elements, useElements } from '@stripe/react-stripe-js';
 import { usePaystackPayment } from 'react-paystack';
 import { useFlutterwave } from 'flutterwave-react-v3';
 import { loadStripe } from '@stripe/stripe-js';
 import { Button } from '@/components/ui/button';
-import { CreditCard, DollarSign } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 
 interface PaymentModalProps {
   amount: number;
@@ -36,18 +37,22 @@ export function PaymentModal({ amount, email, onSuccess, onClose }: PaymentModal
     payment_options: 'card,ussd,bank_transfer',
     customer: {
       email,
+      phonenumber: '',
+      name: '',
     },
     customizations: {
       title: 'Anything Cars Payment',
       description: 'Payment for services',
-      logo: 'https://your-logo-url.com',
+      logo: 'https://anythingcar.com',
     },
   };
 
   const initializePaystack = usePaystackPayment(paystackConfig);
   const handleFlutterPayment = useFlutterwave(flutterwaveConfig);
+  const elements = useElements();
 
   const handleStripePayment = async () => {
+    const cardElement = elements?.getElement(CardElement);
     setLoading(true);
     try {
       const stripe = await stripePromise;
@@ -65,9 +70,7 @@ export function PaymentModal({ amount, email, onSuccess, onClose }: PaymentModal
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: {
-            // Stripe Elements integration would go here
-          },
+          card: cardElement!,
           billing_details: {
             email,
           },
@@ -88,7 +91,10 @@ export function PaymentModal({ amount, email, onSuccess, onClose }: PaymentModal
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+      <Elements stripe={stripePromise}>
+        <CardElement />
+      </Elements>
+      <div className="space-y-4">
         <h2 className="text-2xl font-bold mb-6">Complete Payment</h2>
         <p className="text-gray-600 mb-6">
           Amount to pay: ₦{amount.toLocaleString()}
@@ -96,7 +102,10 @@ export function PaymentModal({ amount, email, onSuccess, onClose }: PaymentModal
 
         <div className="space-y-4">
           <Button
-            onClick={() => initializePaystack()}
+            onClick={() => initializePaystack({
+              onSuccess,
+              onClose
+            })}
             className="w-full"
             disabled={loading}
           >
@@ -105,13 +114,14 @@ export function PaymentModal({ amount, email, onSuccess, onClose }: PaymentModal
           </Button>
 
           <Button
-            onClick={() => handleFlutterPayment({ callback: onSuccess })}
+            onClick={() => handleFlutterPayment({ callback: onSuccess, onClose })}
             className="w-full"
             disabled={loading}
           >
-            <DollarSign className="mr-2 h-4 w-4" />
+            <span className="mr-2 h-4 w-4">₦</span>
             Pay with Flutterwave
           </Button>
+
 
           <Button
             onClick={handleStripePayment}

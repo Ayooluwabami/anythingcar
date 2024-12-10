@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CreditCard, DollarSign, ChevronRight, Check } from 'lucide-react';
+import { CreditCard, ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePaystackPayment } from 'react-paystack';
 import { useFlutterwave } from 'flutterwave-react-v3';
@@ -28,10 +28,11 @@ export function MobilePaymentUI({ amount, email, onSuccess, onClose }: MobilePay
     amount,
     currency: 'NGN',
     payment_options: 'card,ussd,bank_transfer',
-    customer: { email },
+    customer: { email, phonenumber: '', name: '' },
     customizations: {
       title: 'Anything Cars Payment',
       description: 'Payment for services',
+      logo: 'https://anythingcar.com/logo.png',
     },
   };
 
@@ -47,13 +48,14 @@ export function MobilePaymentUI({ amount, email, onSuccess, onClose }: MobilePay
     {
       id: 'paystack',
       name: 'Paystack',
-      icon: <DollarSign className="h-6 w-6" />,
+      icon: <span className="h-6 w-6 text-lg text-gray-900">₦</span>,
     },
     {
       id: 'flutterwave',
       name: 'Flutterwave',
-      icon: <DollarSign className="h-6 w-6" />,
+      icon: <span className="h-6 w-6 text-lg text-gray-900">₦</span>,
     },
+
   ];
 
   const handlePayment = async () => {
@@ -61,10 +63,13 @@ export function MobilePaymentUI({ amount, email, onSuccess, onClose }: MobilePay
     try {
       switch (selectedMethod) {
         case 'paystack':
-          initializePaystack();
+          initializePaystack({
+            onSuccess,
+            onClose,
+          });
           break;
         case 'flutterwave':
-          handleFlutterPayment({ callback: onSuccess });
+          handleFlutterPayment({ callback: onSuccess, onClose });
           break;
         case 'card':
           // Handle direct card payment
@@ -81,7 +86,7 @@ export function MobilePaymentUI({ amount, email, onSuccess, onClose }: MobilePay
     <div className="bg-white min-h-screen">
       <div className="px-4 py-6">
         <h2 className="text-2xl font-bold mb-6">Payment</h2>
-        
+
         <div className="mb-8">
           <p className="text-gray-600">Amount to Pay</p>
           <p className="text-3xl font-bold">₦{amount.toLocaleString()}</p>
@@ -93,11 +98,10 @@ export function MobilePaymentUI({ amount, email, onSuccess, onClose }: MobilePay
             <button
               key={method.id}
               onClick={() => setSelectedMethod(method.id)}
-              className={`w-full flex items-center justify-between p-4 rounded-lg border ${
-                selectedMethod === method.id
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200'
-              }`}
+              className={`w-full flex items-center justify-between p-4 rounded-lg border ${selectedMethod === method.id
+                ? 'border-blue-500 bg-blue-50'
+                : 'border-gray-200'
+                }`}
             >
               <div className="flex items-center space-x-3">
                 <div className="text-blue-600">{method.icon}</div>

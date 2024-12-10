@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, MessageSquare, ThumbsUp, Flag } from 'lucide-react';
+import { Star, MessageSquare, Flag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Review {
@@ -12,7 +12,7 @@ interface Review {
 }
 
 export function ServiceProviderReviews() {
-  const [reviews, setReviews] = useState<Review[]>([
+  const [reviews] = useState<Review[]>([
     {
       id: '1',
       customerName: 'John Doe',
@@ -36,18 +36,19 @@ export function ServiceProviderReviews() {
     return [...Array(5)].map((_, index) => (
       <Star
         key={index}
-        className={`h-4 w-4 ${
-          index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-        }`}
+        className={`h-4 w-4 ${index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+          }`}
       />
     ));
   };
 
   const handleResponse = (reviewId: string) => {
+    console.log(`Responding to review with ID: ${reviewId}`);
     // Implement response functionality
   };
 
   const handleReport = (reviewId: string) => {
+    console.log(`Reporting review with ID: ${reviewId}`);
     // Implement report functionality
   };
 

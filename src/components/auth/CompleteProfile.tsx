@@ -20,7 +20,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 export function CompleteProfile() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { } = useAuth();
   const [error, setError] = useState('');
 
   const { register, handleSubmit, formState: { errors } } = useForm<ProfileFormData>({
@@ -52,7 +52,7 @@ export function CompleteProfile() {
     <div className="max-w-md mx-auto">
       <div className="bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-6">Complete Your Profile</h2>
-        
+
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}

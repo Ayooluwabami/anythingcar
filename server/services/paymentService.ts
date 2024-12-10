@@ -2,13 +2,13 @@ import Stripe from 'stripe';
 import axios from 'axios';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
+  apiVersion: '2024-11-20.acacia',
 });
 
 export const paymentService = {
-  async createStripePayment(amount: number, currency: string = 'usd') {
+  async createStripePayment(amount: number, currency: string = 'ngn') {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Convert to cents
+      amount: amount * 100, // Convert to kobo
       currency,
     });
 
@@ -52,7 +52,7 @@ export const paymentService = {
         customizations: {
           title: 'Anything Cars Payment',
           description: 'Payment for services',
-          logo: 'https://yourdomain.com/logo.png',
+          logo: 'https://anythingcar.com/logo.png',
         },
       },
       {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Car, Calendar, DollarSign, MessageSquare } from 'lucide-react';
+import { Car, Calendar, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 
@@ -59,44 +59,40 @@ export function CarOwnerDashboard({ activeTab, setActiveTab }: Props) {
       <div className="md:col-span-1 space-y-2">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${
-            activeTab === 'overview'
-              ? 'bg-blue-50 text-blue-600'
-              : 'hover:bg-gray-50'
-          }`}
+          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${activeTab === 'overview'
+            ? 'bg-blue-50 text-blue-600'
+            : 'hover:bg-gray-50'
+            }`}
         >
           <Car className="h-5 w-5" />
           <span>My Vehicles</span>
         </button>
         <button
           onClick={() => setActiveTab('bookings')}
-          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${
-            activeTab === 'bookings'
-              ? 'bg-blue-50 text-blue-600'
-              : 'hover:bg-gray-50'
-          }`}
+          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${activeTab === 'bookings'
+            ? 'bg-blue-50 text-blue-600'
+            : 'hover:bg-gray-50'
+            }`}
         >
           <Calendar className="h-5 w-5" />
           <span>Bookings</span>
         </button>
         <button
           onClick={() => setActiveTab('earnings')}
-          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${
-            activeTab === 'earnings'
-              ? 'bg-blue-50 text-blue-600'
-              : 'hover:bg-gray-50'
-          }`}
+          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${activeTab === 'earnings'
+            ? 'bg-blue-50 text-blue-600'
+            : 'hover:bg-gray-50'
+            }`}
         >
-          <DollarSign className="h-5 w-5" />
+          <span className="h-5 w-5">₦</span>
           <span>Earnings</span>
         </button>
         <button
           onClick={() => setActiveTab('messages')}
-          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${
-            activeTab === 'messages'
-              ? 'bg-blue-50 text-blue-600'
-              : 'hover:bg-gray-50'
-          }`}
+          className={`w-full text-left px-4 py-2 rounded-lg flex items-center space-x-2 ${activeTab === 'messages'
+            ? 'bg-blue-50 text-blue-600'
+            : 'hover:bg-gray-50'
+            }`}
         >
           <MessageSquare className="h-5 w-5" />
           <span>Messages</span>
@@ -147,11 +143,10 @@ export function CarOwnerDashboard({ activeTab, setActiveTab }: Props) {
                   </div>
                   <div className="mt-2">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs ${
-                        vehicle.isAvailable
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
+                      className={`px-2 py-1 rounded-full text-xs ${vehicle.isAvailable
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                        }`}
                     >
                       {vehicle.isAvailable ? 'Available' : 'Booked'}
                     </span>

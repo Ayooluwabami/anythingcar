@@ -14,7 +14,7 @@ interface Booking {
 
 export function ServiceProviderBookings() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings] = useState<Booking[]>([]);
 
   const getStatusColor = (status: Booking['status']) => {
     const colors = {
@@ -33,21 +33,19 @@ export function ServiceProviderBookings() {
         <div className="flex space-x-4">
           <button
             onClick={() => setActiveTab('upcoming')}
-            className={`px-4 py-2 rounded-lg ${
-              activeTab === 'upcoming'
+            className={`px-4 py-2 rounded-lg ${activeTab === 'upcoming'
                 ? 'bg-blue-50 text-blue-600'
                 : 'text-gray-600 hover:bg-gray-50'
-            }`}
+              }`}
           >
             Upcoming
           </button>
           <button
             onClick={() => setActiveTab('completed')}
-            className={`px-4 py-2 rounded-lg ${
-              activeTab === 'completed'
+            className={`px-4 py-2 rounded-lg ${activeTab === 'completed'
                 ? 'bg-blue-50 text-blue-600'
                 : 'text-gray-600 hover:bg-gray-50'
-            }`}
+              }`}
           >
             Completed
           </button>

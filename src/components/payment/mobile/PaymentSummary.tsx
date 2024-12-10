@@ -1,5 +1,3 @@
-import { DollarSign } from 'lucide-react';
-
 interface PaymentSummaryProps {
   amount: number;
   currency?: string;
@@ -11,7 +9,7 @@ export function PaymentSummary({ amount, currency = 'NGN', description }: Paymen
     <div className="bg-white p-4 rounded-lg shadow-sm">
       <p className="text-gray-600">Amount to Pay</p>
       <div className="flex items-center mt-1">
-        <DollarSign className="h-6 w-6 text-gray-400" />
+        return <span className="h-6 w-6 text-lg text-gray-400">₦</span>;
         <span className="text-3xl font-bold">
           {currency === 'NGN' ? '₦' : '$'}{amount.toLocaleString()}
         </span>

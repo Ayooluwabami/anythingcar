@@ -1,6 +1,6 @@
-import { Car, MapPin, Calendar, DollarSign } from 'lucide-react';
+import { MapPin, Calendar, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 interface CarListingCardProps {
   listing: {
@@ -34,31 +34,31 @@ export function CarListingCard({ listing, onViewDetails }: CarListingCardProps) 
           </span>
         </div>
       </div>
-      
+
       <div className="p-4">
         <h3 className="text-lg font-semibold">
           {listing.make} {listing.model} {listing.year}
         </h3>
-        
+
         <div className="mt-2 space-y-2">
           <div className="flex items-center text-gray-600">
             <MapPin className="h-4 w-4 mr-2" />
             <span className="text-sm">{listing.location.address}</span>
           </div>
-          
+
           <div className="flex items-center text-gray-600">
             <Calendar className="h-4 w-4 mr-2" />
             <span className="text-sm">{listing.mileage.toLocaleString()} km</span>
           </div>
-          
+
           <div className="flex items-center text-xl font-bold text-blue-600">
             <DollarSign className="h-5 w-5" />
             <span>₦{formatCurrency(listing.price)}</span>
           </div>
         </div>
-        
+
         <div className="mt-4">
-          <Button 
+          <Button
             onClick={() => onViewDetails(listing._id)}
             className="w-full"
           >

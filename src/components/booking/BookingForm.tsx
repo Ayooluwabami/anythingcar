@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Calendar, MapPin, Shield, Clock } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PaymentModal } from '@/components/payment/PaymentModal';
 import { useAuth } from '@/contexts/AuthContext';
@@ -40,7 +40,6 @@ export function BookingForm({ vehicle }: BookingFormProps) {
   });
 
   const startDate = watch('startDate');
-  const endDate = watch('endDate');
   const securityEscort = watch('securityEscort');
 
   const calculateTotal = (data: BookingFormData) => {

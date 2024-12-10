@@ -12,7 +12,7 @@ router.post('/verify-email', authController.verifyEmail);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password', authController.resetPassword);
 
-// OAuth routes
+// OAuth route
 router.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );

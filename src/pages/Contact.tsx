@@ -37,7 +37,7 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-gray-600">+234 (0) 123 456 7890</p>
+                    <p className="text-gray-600">+234 (0)8065040593</p>
                   </div>
                 </div>
 
@@ -69,16 +69,8 @@ export function Contact() {
               <h3 className="text-xl font-semibold mb-4">Business Hours</h3>
               <div className="space-y-2">
                 <p className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span>8:00 AM - 6:00 PM</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span>9:00 AM - 4:00 PM</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>Sunday:</span>
-                  <span>Closed</span>
+                  <span>Monday - Sunday:</span>
+                  <span>6:00 AM - 10:00 PM</span>
                 </p>
               </div>
             </div>

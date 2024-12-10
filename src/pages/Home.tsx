@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Car, Shield, MapPin, Clock, Star, Wrench, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Home() {
@@ -15,14 +14,14 @@ export function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
         </div>
-        
+
         <div className="relative container mx-auto px-4 h-full flex items-center">
           <div className="max-w-2xl text-white">
             <h1 className="text-5xl font-bold mb-6">
               Your Journey, Your Style
             </h1>
             <p className="text-xl mb-8">
-              Experience luxury and convenience with our premium car services. 
+              Experience luxury and convenience with our premium car services.
               Whether you're hiring, buying, or need parts - we've got you covered.
             </p>
             <div className="flex gap-4">

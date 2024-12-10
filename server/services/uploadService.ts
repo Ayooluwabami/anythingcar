@@ -1,11 +1,13 @@
-import aws from 'aws-sdk';
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import { v4 as uuidv4 } from 'uuid';
 
-const s3 = new aws.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+  },
   region: process.env.AWS_REGION
 });
 
@@ -36,14 +38,14 @@ export const upload = multer({
 
 export const deleteImage = async (imageUrl: string) => {
   const key = imageUrl.split('/').pop();
-  
+
   const params = {
     Bucket: process.env.AWS_S3_BUCKET!,
     Key: `vehicles/${key}`
   };
-
+  await s3.send(new DeleteObjectCommand(params));
   try {
-    await s3.deleteObject(params).promise();
+    await s3.send(new DeleteObjectCommand(params));
     return true;
   } catch (error) {
     console.error('Error deleting image:', error);

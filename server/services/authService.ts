@@ -147,7 +147,7 @@ export const authService = {
       }
 
       user.password = newPassword;
-      user.passwordResetToken = null; // Clear the reset token
+      user.passwordResetToken = undefined; // Clear the reset token
       await user.save();
 
       return { message: 'Password has been successfully updated' };

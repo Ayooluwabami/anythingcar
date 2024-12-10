@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { paymentService } from '@/services/paymentService';
 import { useToast } from '@/components/ui/use-toast';
-import { CreditCard, DollarSign } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 
 const paymentSchema = z.object({
   paymentMethod: z.enum(['stripe', 'paystack', 'flutterwave']),
@@ -22,7 +22,7 @@ interface PaymentFormProps {
   metadata?: Record<string, any>;
 }
 
-export function PaymentForm({ amount, email, onSuccess, onCancel, metadata }: PaymentFormProps) {
+export function PaymentForm({ amount, email, onCancel, metadata }: PaymentFormProps) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const { register, handleSubmit } = useForm<PaymentFormData>({
@@ -38,7 +38,7 @@ export function PaymentForm({ amount, email, onSuccess, onCancel, metadata }: Pa
     try {
       switch (data.paymentMethod) {
         case 'stripe':
-          const { stripe, clientSecret } = await paymentService.initializeStripePayment({
+          await paymentService.initializeStripePayment({
             amount,
             email,
             metadata,

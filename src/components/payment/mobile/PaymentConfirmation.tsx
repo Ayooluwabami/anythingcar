@@ -5,16 +5,14 @@ import { Button } from '@/components/ui/button';
 
 interface PaymentConfirmationProps {
   amount: number;
-  email: string;
   onConfirm: (method: string) => void;
   onCancel: () => void;
 }
 
-export function PaymentConfirmation({ 
-  amount, 
-  email, 
-  onConfirm, 
-  onCancel 
+export function PaymentConfirmation({
+  amount,
+  onConfirm,
+  onCancel
 }: PaymentConfirmationProps) {
   const [selectedMethod, setSelectedMethod] = useState<string>('');
 

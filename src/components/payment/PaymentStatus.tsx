@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { paymentService } from '@/services/paymentService';
@@ -23,7 +23,7 @@ export function PaymentStatus({ reference, provider, onSuccess, onFailure }: Pay
   const verifyPayment = async () => {
     try {
       const result = await paymentService.verifyPayment(provider, reference);
-      
+
       if (result.status === 'success') {
         toast({
           title: 'Payment Successful',

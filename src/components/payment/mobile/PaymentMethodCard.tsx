@@ -1,4 +1,4 @@
-import { CreditCard, DollarSign, Check } from 'lucide-react';
+import { CreditCard, Check } from 'lucide-react';
 
 interface PaymentMethodCardProps {
   id: string;
@@ -15,16 +15,16 @@ export function PaymentMethodCard({ id, name, icon, selected, onSelect }: Paymen
         return <CreditCard className="h-6 w-6" />;
       case 'paystack':
       case 'flutterwave':
-        return <DollarSign className="h-6 w-6" />;
+        return <span className="h-6 w-6 text-lg">₦</span>;
+
     }
   };
 
   return (
     <button
       onClick={() => onSelect(id)}
-      className={`w-full flex items-center justify-between p-4 rounded-lg border ${
-        selected ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-      }`}
+      className={`w-full flex items-center justify-between p-4 rounded-lg border ${selected ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
+        }`}
     >
       <div className="flex items-center space-x-3">
         <div className="text-blue-600">{getIcon()}</div>

@@ -1,11 +1,12 @@
 import sgMail from '@sendgrid/mail';
 import twilio from 'twilio';
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 export const notificationService = {
+
   async sendOTP(user: any, otpType: 'email' | 'phone') {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
@@ -40,7 +41,7 @@ export const notificationService = {
 
   async verifyOTP(userId: string, otp: string) {
     const user = await User.findById(userId);
-    
+
     if (!user) {
       throw new Error('User not found');
     }
@@ -49,7 +50,7 @@ export const notificationService = {
       throw new Error('Invalid OTP');
     }
 
-    if (user.otpExpiresAt < new Date()) {
+    if (!user.otpExpiresAt || user.otpExpiresAt < new Date()) {
       throw new Error('OTP has expired');
     }
 
@@ -79,4 +80,31 @@ export const notificationService = {
       });
     }
   },
+
+  // Method to notify the admin
+  async notifyAdmin(subject: string, details: any) {
+    try {
+      const adminEmail = process.env.ADMIN_EMAIL!;
+
+      // Send an email notification to the admin
+      await sgMail.send({
+        to: adminEmail,
+        from: process.env.SMTP_USER!,
+        subject,
+        text: JSON.stringify(details, null, 2), // Convert details to a JSON string for easy reading
+        html: `<pre>${JSON.stringify(details, null, 2)}</pre>`,
+      });
+
+      await twilioClient.messages.create({
+        body: `Admin Notification: ${subject} - Details: ${JSON.stringify(details)}`,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: process.env.ADMIN_PHONE_NUMBER!,
+      });
+
+      return { message: 'Admin notified successfully' };
+    } catch (error) {
+      console.error('Error notifying admin:', error);
+      throw new Error('Failed to notify admin');
+    }
+  }
 };
